@@ -1,9 +1,12 @@
 package app.web;
 
+import app.model.EmailNotification;
 import app.model.NotificationSetting;
 import app.servise.NotificationService;
 import app.web.dto.NotificationPreferenceRequest;
 import app.web.dto.NotificationPreferenceResponse;
+import app.web.dto.NotificationRequest;
+import app.web.dto.NotificationResponse;
 import app.web.mapper.DtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +25,8 @@ public class NotificationController {
     @PostMapping("/preferences")
     public ResponseEntity<NotificationPreferenceResponse> upsertNotificationPreference (@RequestBody NotificationPreferenceRequest notificationPreference) {
 
-        NotificationSetting notification = notificationService.upsertNotification(notificationPreference);
-        NotificationPreferenceResponse response = DtoMapper.fromNotification(notification);
+        NotificationSetting notification = notificationService.upsertNotificationSetting(notificationPreference);
+        NotificationPreferenceResponse response = DtoMapper.fromNotificationSetting(notification);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -33,11 +36,22 @@ public class NotificationController {
     @GetMapping("/preferences")
     public ResponseEntity<NotificationPreferenceResponse> getUserNotification(@RequestParam (name = "userId")UUID userId) {
 
-        NotificationSetting notification = notificationService.getUserNotification(userId);
-        NotificationPreferenceResponse response = DtoMapper.fromNotification(notification);
+        NotificationSetting notification = notificationService.getUserNotificationSetting(userId);
+        NotificationPreferenceResponse response = DtoMapper.fromNotificationSetting(notification);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
+                .body(response);
+    }
+
+    @PostMapping
+    public ResponseEntity<NotificationResponse> sendNotification(@RequestBody NotificationRequest notificationRequest) {
+
+        EmailNotification notification = notificationService.sendNotification(notificationRequest);
+        NotificationResponse response = DtoMapper.fromNotification(notification);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
                 .body(response);
     }
 }
