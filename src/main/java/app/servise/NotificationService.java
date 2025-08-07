@@ -16,6 +16,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -96,5 +97,16 @@ public class NotificationService {
         }
 
         return emailNotificationRepository.save(notification);
+    }
+
+    public List<EmailNotification> getNotificationHistory(UUID userId) {
+        return emailNotificationRepository.findAllByUserIdAndDeleteIsFalse(userId);
+    }
+
+    public NotificationSetting changeNotificationSending(UUID userId, boolean enabled) {
+
+        NotificationSetting notificationSetting = getUserNotificationSetting(userId);
+        notificationSetting.setEnabled(enabled);
+        return notificationSettingRepository.save(notificationSetting);
     }
 }
