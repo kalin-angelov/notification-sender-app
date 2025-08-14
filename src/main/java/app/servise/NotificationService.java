@@ -11,6 +11,7 @@ import app.web.dto.NotificationPreferenceRequest;
 import app.web.dto.NotificationRequest;
 import app.web.mapper.DtoMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class NotificationService {
     private final NotificationSettingRepository notificationSettingRepository;
     private final MailSender mailSender;
 
+    @Autowired
     public NotificationService(EmailNotificationRepository notificationRepository, NotificationSettingRepository notificationSettingRepository, MailSender mailSender) {
         this.emailNotificationRepository = notificationRepository;
         this.notificationSettingRepository = notificationSettingRepository;
