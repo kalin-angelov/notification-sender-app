@@ -1,6 +1,6 @@
 package app.notification;
 
-import app.exceptions.UserNotificationSettingNotFound;
+import app.exceptions.UserNotificationInformationNotFound;
 import app.model.NotificationSetting;
 import app.model.NotificationType;
 import app.repository.EmailNotificationRepository;
@@ -75,7 +75,7 @@ public class NotificationServiceTest {
 
         when(notificationSettingRepository.findByUserId(any())).thenReturn(Optional.empty());
 
-        assertThrows(UserNotificationSettingNotFound.class, () -> notificationService.getUserNotificationSetting(UUID.randomUUID()));
+        assertThrows(UserNotificationInformationNotFound.class, () -> notificationService.getUserNotificationSetting(UUID.randomUUID()));
     }
 
     @Test
