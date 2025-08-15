@@ -1,6 +1,6 @@
 package app.servise;
 
-import app.exceptions.UserNotificationSettingNotFound;
+import app.exceptions.UserNotificationInformationNotFound;
 import app.model.EmailNotification;
 import app.model.NotificationSetting;
 import app.model.NotificationStatus;
@@ -62,7 +62,7 @@ public class NotificationService {
     }
 
     public NotificationSetting getUserNotificationSetting(UUID userId) {
-        NotificationSetting notificationSetting = notificationSettingRepository.findByUserId(userId).orElseThrow(UserNotificationSettingNotFound::new);
+        NotificationSetting notificationSetting = notificationSettingRepository.findByUserId(userId).orElseThrow(UserNotificationInformationNotFound::new);
         log.info("Notification setting for user with id [%s] was not found.".formatted(userId));
         return notificationSetting;
     }
@@ -102,7 +102,7 @@ public class NotificationService {
     }
 
     public List<EmailNotification> getNotificationHistory(UUID userId) {
-        return emailNotificationRepository.findAllByUserIdAndDeleteIsFalse(userId);
+        return emailNotificationRepository.findAllByUserIdAndIsDeleted(userId, false).orElseThrow(UserNotificationInformationNotFound::new);
     }
 
     public NotificationSetting changeNotificationSending(UUID userId, boolean enabled) {
