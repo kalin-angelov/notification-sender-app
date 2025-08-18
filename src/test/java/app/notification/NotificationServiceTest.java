@@ -89,7 +89,7 @@ public class NotificationServiceTest {
 
         when(notificationSettingRepository.findByUserId(userId)).thenReturn(Optional.of(notificationSetting));
 
-        notificationService.changeNotificationSending(userId, false);
+        notificationService.changeNotificationSendingSetting(userId, false);
 
         assertFalse(notificationSetting.isEnabled());
         verify(notificationSettingRepository, times(1)).save(notificationSetting);
@@ -106,7 +106,7 @@ public class NotificationServiceTest {
 
         when(notificationSettingRepository.findByUserId(userId)).thenReturn(Optional.of(notificationSetting));
 
-        notificationService.changeNotificationSending(userId, true);
+        notificationService.changeNotificationSendingSetting(userId, true);
 
         assertTrue(notificationSetting.isEnabled());
         verify(notificationSettingRepository, times(1)).save(notificationSetting);
