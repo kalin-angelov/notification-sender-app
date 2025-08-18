@@ -105,7 +105,7 @@ public class NotificationService {
         return emailNotificationRepository.findAllByUserIdAndIsDeleted(userId, false).orElseThrow(UserNotificationInformationNotFound::new);
     }
 
-    public NotificationSetting changeNotificationSending(UUID userId, boolean enabled) {
+    public NotificationSetting changeNotificationSendingSetting(UUID userId, boolean enabled) {
 
         NotificationSetting notificationSetting = getUserNotificationSetting(userId);
         notificationSetting.setEnabled(enabled);
