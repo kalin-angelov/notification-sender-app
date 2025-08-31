@@ -36,6 +36,7 @@ This service was originally built as a companion microservice for [Trusty Wallet
    ```bash
    git clone https://github.com/kalin-angelov/notification-sender-app.git
    cd notification-sender-app
+   ```
 
 3. Configure database in `application.properties` :
    
@@ -48,12 +49,14 @@ This service was originally built as a companion microservice for [Trusty Wallet
     spring.mail.port=587
     spring.mail.username=your_email@gmail.com
     spring.mail.password=your_app_password
+    ```
 
 5. Build and run the app:
    
      ```bash
      mvn clean install
      mvn spring-boot:run
+     ```
 
 ---
 
@@ -68,6 +71,23 @@ Example request (JSON payload):
     "subject": "Trusty Wallet Transaction",
     "body": "You have received 59.99 Euro in your wallet."
   }
+  ```
 
+Call the endpoint with:
 
+   ```bash
+   curl -X POST http://localhost:8080/api/notifications/send \
+  -H "Content-Type: application/json" \
+  -d '{"to":"user@example.com","subject":"Test","body":"Hello from Notification Sender!"}'
+   ```
+
+The endpoints can also be tested with `Postman`:
+
+| Method | Endpoint                                                                | Description                               |
+| ------ | ----------------------------------------------------------------------- | ----------------------------------------- |
+| POST   | `/api/v1/notifications`                                                 | Send notification                         |
+| POST   | `/api/v1/notifications/preferences?userId={userId}`                     | Create or update notification preference  |
+| GET    | `/api/v1/notifications?userId={userId}`                                 | Get user notifications history            |
+| GET    | `/api/v1/notifications/preferences`                                     | Get user notification preference          |
+| PUT    | `/api/v1/notifications/preferences?userId={userId}&enabled={enabled}`   | Turn On/Off notifications                 |
 
